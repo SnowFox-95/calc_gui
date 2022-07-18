@@ -63,10 +63,19 @@ class Calculator(QMainWindow):
                                   f'{math_sign}')
             self.ui.lineEdit.setText('0')
 
-    def get_entry_num(self):
+    def get_entry_num(self) -> Union[int, float]:
         entry = self.ui.lineEdit.text().strip('.')
 
         return float(entry) if '.' in entry else int(entry)
+
+    def get_temp_num(self) -> Union[int, float, None]:
+        if self.ui.label.text():
+            temp = self.ui.label.text().strip('.').split()[0]
+            return float(temp) if '.' in temp else int(temp)
+
+    def get_math_sign(self) -> Optional[str]:
+        if self.ui.label.text():
+            return self.ui.label.text().strip('.').split()[-1]
 
 
 if __name__ == "__main__":
