@@ -64,7 +64,7 @@ QPushButton:press {
        <string notr="true">color:#888;</string>
       </property>
       <property name="text">
-       <string>2+2=</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

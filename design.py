@@ -265,7 +265,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Calculator4ik", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"2+2=", None))
+        self.label.setText("")
         self.lineEdit.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.btn_C.setText(QCoreApplication.translate("MainWindow", u"C", None))
         self.btn_CE.setText(QCoreApplication.translate("MainWindow", u"CE", None))
