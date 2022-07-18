@@ -70,7 +70,7 @@ class Calculator(QMainWindow):
         return n[:-2] if n[-2:] == '.0' else n
 
     def add_temp(self, math_sign: str):
-        if not self.ui.label.text():
+        if not self.ui.label.text() or self.get_math_sign() == '=':
             self.ui.label.setText(self.remove_trailing_zeros(self.ui.lineEdit.text()) +
                                   f'{math_sign}')
             self.ui.lineEdit.setText('0')
