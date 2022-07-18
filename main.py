@@ -1,10 +1,18 @@
 import sys
 from typing import Union, Optional
+from operator import add, sub, mul, truediv
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QFontDatabase
 
 from design import Ui_MainWindow
+
+operations = {
+    '+': add,
+    '-': sub,
+    '×': mul,
+    '/': truediv
+}
 
 
 class Calculator(QMainWindow):
@@ -32,8 +40,9 @@ class Calculator(QMainWindow):
         self.ui.btn_CE.clicked.connect(self.clear_entry)
         self.ui.btn_fract.clicked.connect(self.add_point)
 
-        # math_sign
-        self.ui.btn_plus.clicked.connect(lambda: self.add_temp('+'))
+        # math
+        self.ui.btn_rez.clicked.connect(self.calculate)
+        self.ui.btn_plus.clicked.connect(lambda: self.add_temp(' + '))
 
     def add_digit(self, btn_text: str) -> None:
         if self.ui.lineEdit.text() == '0':
@@ -76,6 +85,19 @@ class Calculator(QMainWindow):
     def get_math_sign(self) -> Optional[str]:
         if self.ui.label.text():
             return self.ui.label.text().strip('.').split()[-1]
+
+    def calculate(self) -> Optional[str]:
+        entry = self.ui.lineEdit.text()
+        temp = self.ui.label.text()
+
+        if temp:
+            rezult = self.remove_trailing_zeros(
+                str(operations[self.get_math_sign()](self.get_temp_num(),
+                                                     self.get_entry_num()))
+            )
+            self.ui.label.setText(temp + self.remove_trailing_zeros(entry) + ' =')
+            self.ui.lineEdit.setText(rezult)
+            return rezult
 
 
 if __name__ == "__main__":
