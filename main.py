@@ -42,7 +42,10 @@ class Calculator(QMainWindow):
 
         # math
         self.ui.btn_rez.clicked.connect(self.calculate)
-        self.ui.btn_plus.clicked.connect(lambda: self.add_temp(' + '))
+        self.ui.btn_plus.clicked.connect(lambda: self.math_operation(' + '))
+        self.ui.btn_min.clicked.connect(lambda: self.math_operation(' - '))
+        self.ui.btn_mult.clicked.connect(lambda: self.math_operation(' × '))
+        self.ui.btn_div.clicked.connect(lambda: self.math_operation(' / '))
 
     def add_digit(self, btn_text: str) -> None:
         if self.ui.lineEdit.text() == '0':
@@ -98,6 +101,20 @@ class Calculator(QMainWindow):
             self.ui.label.setText(temp + self.remove_trailing_zeros(entry) + ' =')
             self.ui.lineEdit.setText(rezult)
             return rezult
+
+    def math_operation(self, math_sign: str):
+        temp = self.ui.label.text()
+
+        if not temp:
+            self.add_temp(math_sign)
+        else:
+            if self.get_math_sign() != math_sign:
+                if self.get_math_sign() == '=':
+                    self.add_temp(math_sign)
+                else:
+                    self.ui.label.setText(temp[:-2] + f'{math_sign}')
+            else:
+                self.ui.label.setText(self.calculate() + f'{math_sign}')
 
 
 if __name__ == "__main__":
