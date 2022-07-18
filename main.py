@@ -27,12 +27,20 @@ class Calculator(QMainWindow):
         self.ui.btn_9.clicked.connect(lambda: self.add_digit('9'))
 
         # actions
+        self.ui.btn_C.clicked.connect(self.clear_all)
+        self.ui.btn_CE.clicked.connect(self.clear_entry)
+        self.ui.btn_fract.clicked.connect(self.add_point)
+
 
     def add_digit(self, btn_text: str) -> None:
         if self.ui.lineEdit.text() == '0':
             self.ui.lineEdit.setText(btn_text)
         else:
             self.ui.lineEdit.setText(self.ui.lineEdit.text() + btn_text)
+    def add_point(self) -> None:
+        if '.' not in self.ui.lineEdit.text():
+            self.ui.lineEdit.setText(self.ui.lineEdit.text()+'.')
+
 
     def clear_all(self) -> None:
         self.ui.lineEdit.setText('0')
