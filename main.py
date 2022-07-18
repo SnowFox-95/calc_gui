@@ -51,10 +51,17 @@ class Calculator(QMainWindow):
     def clear_entry(self) -> None:
         self.ui.lineEdit.setText('0')
 
-    def add_temp(self, math_sign: str):
-        if not self.ui.label.text():
-            self.ui.label.setText(self.ui.lineEdit.text() + f'{math_sign}')
-            self.ui.lineEdit.setText('0')
+    @staticmethod
+    def remove_trailing_zeros(num: str) -> str:
+        n = str(float(num))
+        return n[:-2] if n[-2:] == '.0' else n
+
+
+def add_temp(self, math_sign: str):
+    if not self.ui.label.text():
+        self.ui.label.setText(self.remove_trailing_zeros(self.ui.lineEdit.text()) +
+                              f'{math_sign}')
+        self.ui.lineEdit.setText('0')
 
 
 if __name__ == "__main__":
