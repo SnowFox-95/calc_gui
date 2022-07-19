@@ -39,6 +39,7 @@ class Calculator(QMainWindow):
         self.ui.btn_C.clicked.connect(self.clear_all)
         self.ui.btn_CE.clicked.connect(self.clear_entry)
         self.ui.btn_fract.clicked.connect(self.add_point)
+        self.ui.btn_module.clicked.connect(self.negate)
 
         # math
         self.ui.btn_rez.clicked.connect(self.calculate)
@@ -62,6 +63,17 @@ class Calculator(QMainWindow):
     def add_point(self) -> None:
         if '.' not in self.ui.lineEdit.text():
             self.ui.lineEdit.setText(self.ui.lineEdit.text() + '.')
+
+    def negate(self):
+        entry = self.ui.lineEdit.text()
+
+        if '-' not in entry:
+            if entry != '0':
+                entry = '-' + entry
+        else:
+            entry = entry[1:]
+
+        self.ui.lineEdit.setText(entry)
 
     def clear_all(self) -> None:
         self.ui.lineEdit.setText('0')
@@ -110,7 +122,7 @@ class Calculator(QMainWindow):
             self.ui.lineEdit.setText(rezult)
             return rezult
 
-    def math_operation(self)->None:
+    def math_operation(self) -> None:
         temp = self.ui.label.text()
         btn = self.sender()
 
