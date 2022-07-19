@@ -24,16 +24,16 @@ class Calculator(QMainWindow):
         QFontDatabase.addApplicationFont("fonts/Rubic-Regular.ttf")
 
         # digits
-        self.ui.btn_0.clicked.connect(lambda: self.add_digit('0'))
-        self.ui.btn_1.clicked.connect(lambda: self.add_digit('1'))
-        self.ui.btn_2.clicked.connect(lambda: self.add_digit('2'))
-        self.ui.btn_3.clicked.connect(lambda: self.add_digit('3'))
-        self.ui.btn_4.clicked.connect(lambda: self.add_digit('4'))
-        self.ui.btn_5.clicked.connect(lambda: self.add_digit('5'))
-        self.ui.btn_6.clicked.connect(lambda: self.add_digit('6'))
-        self.ui.btn_7.clicked.connect(lambda: self.add_digit('7'))
-        self.ui.btn_8.clicked.connect(lambda: self.add_digit('8'))
-        self.ui.btn_9.clicked.connect(lambda: self.add_digit('9'))
+        self.ui.btn_0.clicked.connect(self.add_digit)
+        self.ui.btn_1.clicked.connect(self.add_digit)
+        self.ui.btn_2.clicked.connect(self.add_digit)
+        self.ui.btn_3.clicked.connect(self.add_digit)
+        self.ui.btn_4.clicked.connect(self.add_digit)
+        self.ui.btn_5.clicked.connect(self.add_digit)
+        self.ui.btn_6.clicked.connect(self.add_digit)
+        self.ui.btn_7.clicked.connect(self.add_digit)
+        self.ui.btn_8.clicked.connect(self.add_digit)
+        self.ui.btn_9.clicked.connect(self.add_digit)
 
         # actions
         self.ui.btn_C.clicked.connect(self.clear_all)
@@ -47,11 +47,17 @@ class Calculator(QMainWindow):
         self.ui.btn_mult.clicked.connect(lambda: self.math_operation(' × '))
         self.ui.btn_div.clicked.connect(lambda: self.math_operation(' / '))
 
-    def add_digit(self, btn_text: str) -> None:
-        if self.ui.lineEdit.text() == '0':
-            self.ui.lineEdit.setText(btn_text)
-        else:
-            self.ui.lineEdit.setText(self.ui.lineEdit.text() + btn_text)
+    def add_digit(self):
+        btn = self.sender()
+
+        digit_buttons = ('btn_0', 'btn_1', 'btn_2', 'btn_3', 'btn_4', 'btn_5', 'btn_6',
+                         'btn_7', 'btn_8', 'btn_9')
+
+        if btn.objectName() in digit_buttons:
+            if self.ui.lineEdit.text() == '0':
+                self.ui.lineEdit.setText(btn.text())
+            else:
+                self.ui.lineEdit.setText(self.ui.lineEdit.text() + btn.text())
 
     def add_point(self) -> None:
         if '.' not in self.ui.lineEdit.text():
@@ -69,10 +75,12 @@ class Calculator(QMainWindow):
         n = str(float(num))
         return n[:-2] if n[-2:] == '.0' else n
 
-    def add_temp(self, math_sign: str):
+    def add_temp(self) -> None:
+        btn = self.sender()
+        entry = self.remove_trailing_zeros(self.ui.lineEdit.text())
+
         if not self.ui.label.text() or self.get_math_sign() == '=':
-            self.ui.label.setText(self.remove_trailing_zeros(self.ui.lineEdit.text()) +
-                                  f'{math_sign}')
+            self.ui.label.setText(entry + f'{btn.text()}')
             self.ui.lineEdit.setText('0')
 
     def get_entry_num(self) -> Union[int, float]:
@@ -102,19 +110,20 @@ class Calculator(QMainWindow):
             self.ui.lineEdit.setText(rezult)
             return rezult
 
-    def math_operation(self, math_sign: str):
+    def math_operation(self)->None:
         temp = self.ui.label.text()
+        btn = self.sender()
 
         if not temp:
-            self.add_temp(math_sign)
+            self.add_temp()
         else:
             if self.get_math_sign() != math_sign:
                 if self.get_math_sign() == '=':
-                    self.add_temp(math_sign)
+                    self.add_temp()
                 else:
-                    self.ui.label.setText(temp[:-2] + f'{math_sign}')
+                    self.ui.label.setText(temp[:-2] + f'{btn.text()}')
             else:
-                self.ui.label.setText(self.calculate() + f'{math_sign}')
+                self.ui.label.setText(self.calculate() + f'{btn.text()}')
 
 
 if __name__ == "__main__":

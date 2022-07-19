@@ -90,7 +90,7 @@ border: none;</string>
        <string>0</string>
       </property>
       <property name="maxLength">
-       <number>10</number>
+       <number>16</number>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

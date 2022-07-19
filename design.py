@@ -78,7 +78,7 @@ class Ui_MainWindow(object):
         self.lineEdit.setLayoutDirection(Qt.LeftToRight)
         self.lineEdit.setStyleSheet(u"font-size: 40pt;\n"
 "border: none;")
-        self.lineEdit.setMaxLength(10)
+        self.lineEdit.setMaxLength(16)
         self.lineEdit.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
         self.lineEdit.setReadOnly(True)
 
