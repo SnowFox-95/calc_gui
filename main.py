@@ -20,6 +20,7 @@ class Calculator(QMainWindow):
         super(Calculator, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.entry_max_length = self.ui.lineEdit.maxLength()
 
         QFontDatabase.addApplicationFont("fonts/Rubic-Regular.ttf")
 
@@ -72,6 +73,11 @@ class Calculator(QMainWindow):
                 entry = '-' + entry
         else:
             entry = entry[1:]
+
+        if len(entry) == self.entry_max_length + 1 and '-' in entry:
+            self.ui.lineEdit.setMaxLength(self.entry_max_length + 1)
+        else:
+            self.ui.lineEdit.setMaxLength(self.entry_max_length)
 
         self.ui.lineEdit.setText(entry)
 
