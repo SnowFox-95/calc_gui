@@ -41,6 +41,7 @@ class Calculator(QMainWindow):
         self.ui.btn_CE.clicked.connect(self.clear_entry)
         self.ui.btn_fract.clicked.connect(self.add_point)
         self.ui.btn_module.clicked.connect(self.negate)
+        self.ui.btn_backspc.clicked.connect(self.backspace)
 
         # math
         self.ui.btn_rez.clicked.connect(self.calculate)
@@ -80,6 +81,17 @@ class Calculator(QMainWindow):
             self.ui.lineEdit.setMaxLength(self.entry_max_length)
 
         self.ui.lineEdit.setText(entry)
+
+    def backspace(self) -> None:
+        entry = self.ui.lineEdit.text()
+
+        if len(entry) != 1:
+            if len(entry) == 2 and '-' in entry:
+                self.ui.lineEdit.setText('0')
+            else:
+                self.ui.lineEdit.setText(entry[:-1])
+        else:
+            self.ui.lineEdit.setText('0')
 
     def clear_all(self) -> None:
         self.ui.lineEdit.setText('0')
